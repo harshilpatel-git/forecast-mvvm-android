@@ -12,7 +12,7 @@ import retrofit2.http.Query
 
 const val API_KEY = "367c0911b5c470d92f075a03d4acbdec"
 
-//http://api.weatherstack.com/current?accesskey=367c0911b5c470d92f075a03d4acbdec&query=New York
+//http://api.weatherstack.com/current?access_key=367c0911b5c470d92f075a03d4acbdec&query=New York
 
 interface WeatherStackApiService {
 
@@ -31,7 +31,7 @@ interface WeatherStackApiService {
                 val url = chain.request()
                     .url()
                     .newBuilder()
-                    .addQueryParameter("accessKey", API_KEY)
+                    .addQueryParameter("access_key", API_KEY)
                     .build()
 
                 // Setting the updated url to the request

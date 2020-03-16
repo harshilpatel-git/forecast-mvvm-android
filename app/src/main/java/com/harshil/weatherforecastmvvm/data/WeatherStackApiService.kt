@@ -24,7 +24,7 @@ interface WeatherStackApiService {
 
     companion object {
         operator fun invoke(): WeatherStackApiService {
-            // Creating an interceptor to add the common query parameter ie. accessKey for all request made for the url
+            // Creating an interceptor to add the common query parameter ie. access_key for all request made for the url
             val requestInterceptor = Interceptor { chain ->
 
                 // Updating the url with the common query parameter

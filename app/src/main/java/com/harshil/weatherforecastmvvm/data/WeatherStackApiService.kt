@@ -1,6 +1,6 @@
 package com.harshil.weatherforecastmvvm.data
 
-import com.harshil.weatherforecastmvvm.data.response.CurrentWeatherResponse
+import com.harshil.weatherforecastmvvm.data.network.response.CurrentWeatherResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
 import okhttp3.Interceptor

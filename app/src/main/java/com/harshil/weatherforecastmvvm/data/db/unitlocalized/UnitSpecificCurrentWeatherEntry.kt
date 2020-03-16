@@ -1,4 +1,4 @@
-package com.resocoder.forecastmvvm.data.db.unitlocalized.current
+package com.harshil.weatherforecastmvvm.data.db.unitlocalized
 
 
 interface UnitSpecificCurrentWeatherEntry {

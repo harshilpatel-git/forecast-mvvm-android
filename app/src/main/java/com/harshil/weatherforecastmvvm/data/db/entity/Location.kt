@@ -1,4 +1,4 @@
-package com.harshil.weatherforecastmvvm.data.db
+package com.harshil.weatherforecastmvvm.data.db.entity
 
 
 import com.google.gson.annotations.SerializedName

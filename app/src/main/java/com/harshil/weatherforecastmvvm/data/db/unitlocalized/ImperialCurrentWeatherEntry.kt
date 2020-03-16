@@ -1,23 +1,24 @@
 package com.resocoder.forecastmvvm.data.db.unitlocalized.current
 
 import androidx.room.ColumnInfo
+import com.harshil.weatherforecastmvvm.data.db.unitlocalized.UnitSpecificCurrentWeatherEntry
 
 
 data class ImperialCurrentWeatherEntry(
-    @ColumnInfo(name = "tempF")
+    @ColumnInfo(name = "temparature")
     override val temperature: Double,
-    @ColumnInfo(name = "condition_text")
+    @ColumnInfo(name = "weather_descriptions")
     override val conditionText: String,
     @ColumnInfo(name = "condition_icon")
     override val conditionIconUrl: String,
-    @ColumnInfo(name = "windMph")
+    @ColumnInfo(name = "wind_speed")
     override val windSpeed: Double,
-    @ColumnInfo(name = "windDir")
+    @ColumnInfo(name = "wind_dir")
     override val windDirection: String,
-    @ColumnInfo(name = "precipIn")
+    @ColumnInfo(name = "precip")
     override val precipitationVolume: Double,
-    @ColumnInfo(name = "feelslikeF")
+    @ColumnInfo(name = "feelslike")
     override val feelsLikeTemperature: Double,
-    @ColumnInfo(name = "visMiles")
+    @ColumnInfo(name = "cloudcover")
     override val visibilityDistance: Double
 ) : UnitSpecificCurrentWeatherEntry

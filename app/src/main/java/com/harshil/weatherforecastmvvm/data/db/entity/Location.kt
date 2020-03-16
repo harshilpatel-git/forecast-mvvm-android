@@ -1,4 +1,4 @@
-package com.harshil.weatherforecastmvvm.data.response
+package com.harshil.weatherforecastmvvm.data.db
 
 
 import com.google.gson.annotations.SerializedName

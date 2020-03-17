@@ -6,6 +6,7 @@ import com.harshil.weatherforecastmvvm.data.network.response.CurrentWeatherRespo
 interface WeatherNetworkDataSource {
     val downloadedCurrentWeather: LiveData<CurrentWeatherResponse>
 
+    // Suspend function because we want it to be called from a coroutine
     suspend fun fetchCurrentWeather(
         location: String,
         unit: String

@@ -4,12 +4,15 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.harshil.weatherforecastmvvm.data.db.entity.CurrentWeatherEntry
 
 @Database(
     entities = [CurrentWeatherEntry::class],
     version = 1
 )
+// To convert list type column entry to string and vice versa, for eg. weather_descriptions and weather_icons in CurrentWeatherEntry object
+@TypeConverters(StringListConverter::class)
 abstract class ForecastDatabase : RoomDatabase() {
     abstract fun currentWeatherDao(): CurrentWeatherDao
 

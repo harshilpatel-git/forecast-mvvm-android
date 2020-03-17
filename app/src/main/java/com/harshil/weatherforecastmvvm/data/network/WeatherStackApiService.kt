@@ -1,4 +1,4 @@
-package com.harshil.weatherforecastmvvm.data
+package com.harshil.weatherforecastmvvm.data.network
 
 import com.harshil.weatherforecastmvvm.data.network.response.CurrentWeatherResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
@@ -19,11 +19,14 @@ interface WeatherStackApiService {
     @GET("current")
     fun getCurrentWeather(
         // Specify the query parameter for request url mentioned above
-        @Query("query") location: String
+        @Query("query") location: String,
+        @Query("units") unit: String
     ): Deferred<CurrentWeatherResponse> // Deferred- It is part of kotlin coroutines, used as we have to wait until we get response from api
 
     companion object {
-        operator fun invoke(): WeatherStackApiService {
+        operator fun invoke(
+            connectivityInterceptor: ConnectivityInterceptor
+        ): WeatherStackApiService {
             // Creating an interceptor to add the common query parameter ie. access_key for all request made for the url
             val requestInterceptor = Interceptor { chain ->
 
@@ -31,7 +34,10 @@ interface WeatherStackApiService {
                 val url = chain.request()
                     .url()
                     .newBuilder()
-                    .addQueryParameter("access_key", API_KEY)
+                    .addQueryParameter(
+                        "access_key",
+                        API_KEY
+                    )
                     .build()
 
                 // Setting the updated url to the request
@@ -47,6 +53,7 @@ interface WeatherStackApiService {
             // Adding the interceptor to the client
             val okHttpClient = OkHttpClient.Builder()
                 .addInterceptor(requestInterceptor)
+                .addInterceptor(connectivityInterceptor)
                 .build()
 
             // Returning the client with the base url

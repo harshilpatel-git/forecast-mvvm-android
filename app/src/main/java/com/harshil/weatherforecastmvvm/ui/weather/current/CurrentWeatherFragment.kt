@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.bumptech.glide.Glide
 import com.harshil.weatherforecastmvvm.R
-import com.harshil.weatherforecastmvvm.internal.glide.GlideApp
 import com.resocoder.forecastmvvm.ui.base.ScopedFragment
 import com.resocoder.forecastmvvm.ui.weather.current.CurrentWeatherViewModel
 import com.resocoder.forecastmvvm.ui.weather.current.CurrentWeatherViewModelFactory
@@ -47,6 +45,13 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
     // lifecycle dependent classes
     private fun bindUi() = launch {
         val currentWeather = viewModel.weather.await()
+        val weatherLocation = viewModel.weatherLocation.await()
+
+        weatherLocation.observe(this@CurrentWeatherFragment, Observer { location ->
+            if (location == null) return@Observer
+
+            updateLocation(location.name)
+        })
         currentWeather.observe(this@CurrentWeatherFragment, Observer {
             // Initially the app will crash here, to avoid we have added the below line as we are
             // fetching data from the database which will be updated when there is change from the
@@ -55,7 +60,6 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
             if (it == null) return@Observer
 
             group_loading.visibility = View.GONE
-            updateLocation("New York")
             updateDateToToday()
             updateTemperatures(it.temperature, it.feelsLikeTemperature)
 //            updateCondition(it.conditionText)

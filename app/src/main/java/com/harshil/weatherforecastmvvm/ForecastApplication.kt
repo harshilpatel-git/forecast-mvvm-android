@@ -4,6 +4,8 @@ import android.app.Application
 import com.harshil.weatherforecastmvvm.data.db.CurrentWeatherDao
 import com.harshil.weatherforecastmvvm.data.db.ForecastDatabase
 import com.harshil.weatherforecastmvvm.data.network.*
+import com.harshil.weatherforecastmvvm.data.provider.LocationProvider
+import com.harshil.weatherforecastmvvm.data.provider.LocationProviderImpl
 import com.harshil.weatherforecastmvvm.data.provider.UnitProvider
 import com.harshil.weatherforecastmvvm.data.provider.UnitProviderImpl
 import com.harshil.weatherforecastmvvm.data.repository.ForecastRepository
@@ -31,6 +33,10 @@ class ForecastApplication : Application(), KodeinAware {
         // initializing currentWeatherDao
         bind() from singleton { instance<ForecastDatabase>().currentWeatherDao() }
 
+        // initializing weatherLocationDao
+        bind() from singleton { instance<ForecastDatabase>().weatherLocationDao() }
+
+
         // For interface binding we need to provide type<> for the bind() function and bind using with keyword
         // Binding the connectivity interface, as it is an interface its binding is different that above binding
         bind<ConnectivityInterceptor>() with singleton { ConnectivityInterceptorImpl(instance()) }
@@ -40,14 +46,17 @@ class ForecastApplication : Application(), KodeinAware {
         // For interface binding we need to provide type<> for the bind() function and bind using with keyword
         bind<WeatherNetworkDataSource>() with singleton { WeatherNetworkDataSourceImpl(instance<WeatherStackApiService>()) }
 
+
+        bind<LocationProvider>() with singleton { LocationProviderImpl() }
+
         // For interface binding we need to provide type<> for the bind() function and bind using with keyword
         bind<ForecastRepository>() with singleton {
             ForecastRepositoryImpl(
                 // we can also directly use instance()
-                // instance is provided for line 27- bind() from singleton { instance<ForecastDatabase>().currentWeatherDao() }
                 instance<CurrentWeatherDao>(),
-                // instance is provided for line 36 bind<WeatherNetworkDataSource>()
-                instance<WeatherNetworkDataSource>()
+                instance(),
+                instance(),
+                instance()
             )
         }
 

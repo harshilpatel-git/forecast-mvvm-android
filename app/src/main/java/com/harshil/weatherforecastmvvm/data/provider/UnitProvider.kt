@@ -1,4 +1,4 @@
-package com.resocoder.forecastmvvm.data.provider
+package com.harshil.weatherforecastmvvm.data.provider
 
 import com.harshil.weatherforecastmvvm.internal.UnitSystem
 

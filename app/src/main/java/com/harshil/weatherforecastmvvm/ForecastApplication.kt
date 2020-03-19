@@ -4,6 +4,8 @@ import android.app.Application
 import com.harshil.weatherforecastmvvm.data.db.CurrentWeatherDao
 import com.harshil.weatherforecastmvvm.data.db.ForecastDatabase
 import com.harshil.weatherforecastmvvm.data.network.*
+import com.harshil.weatherforecastmvvm.data.provider.UnitProvider
+import com.harshil.weatherforecastmvvm.data.provider.UnitProviderImpl
 import com.harshil.weatherforecastmvvm.data.repository.ForecastRepository
 import com.harshil.weatherforecastmvvm.data.repository.ForecastRepositoryImpl
 import com.jakewharton.threetenabp.AndroidThreeTen
@@ -49,9 +51,11 @@ class ForecastApplication : Application(), KodeinAware {
             )
         }
 
+        bind<UnitProvider>() with singleton { UnitProviderImpl(instance()) }
+
         // For binding class or a factory
-        // instance() is instance<ForecastRepository>()
-        bind() from provider { CurrentWeatherViewModelFactory(instance()) }
+        // instance() is instance<ForecastRepository>() and instance<UnitProvider>() respectively
+        bind() from provider { CurrentWeatherViewModelFactory(instance(), instance()) }
     }
 
     override fun onCreate() {

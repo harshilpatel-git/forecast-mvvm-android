@@ -1,6 +1,8 @@
 package com.harshil.weatherforecastmvvm
 
 import android.app.Application
+import android.content.Context
+import com.google.android.gms.location.LocationServices
 import com.harshil.weatherforecastmvvm.data.db.CurrentWeatherDao
 import com.harshil.weatherforecastmvvm.data.db.ForecastDatabase
 import com.harshil.weatherforecastmvvm.data.network.*
@@ -46,8 +48,8 @@ class ForecastApplication : Application(), KodeinAware {
         // For interface binding we need to provide type<> for the bind() function and bind using with keyword
         bind<WeatherNetworkDataSource>() with singleton { WeatherNetworkDataSourceImpl(instance<WeatherStackApiService>()) }
 
-
-        bind<LocationProvider>() with singleton { LocationProviderImpl() }
+        bind() from provider { LocationServices.getFusedLocationProviderClient(instance<Context>()) }
+        bind<LocationProvider>() with singleton { LocationProviderImpl(instance(), instance()) }
 
         // For interface binding we need to provide type<> for the bind() function and bind using with keyword
         bind<ForecastRepository>() with singleton {

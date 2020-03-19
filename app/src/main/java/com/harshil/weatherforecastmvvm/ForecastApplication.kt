@@ -6,11 +6,14 @@ import com.harshil.weatherforecastmvvm.data.db.ForecastDatabase
 import com.harshil.weatherforecastmvvm.data.network.*
 import com.harshil.weatherforecastmvvm.data.repository.ForecastRepository
 import com.harshil.weatherforecastmvvm.data.repository.ForecastRepositoryImpl
+import com.jakewharton.threetenabp.AndroidThreeTen
+import com.resocoder.forecastmvvm.ui.weather.current.CurrentWeatherViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
+import org.kodein.di.generic.provider
 import org.kodein.di.generic.singleton
 
 class ForecastApplication : Application(), KodeinAware {
@@ -45,6 +48,16 @@ class ForecastApplication : Application(), KodeinAware {
                 instance<WeatherNetworkDataSource>()
             )
         }
+
+        // For binding class or a factory
+        // instance() is instance<ForecastRepository>()
+        bind() from provider { CurrentWeatherViewModelFactory(instance()) }
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        // Used for ZonedDateTime
+        AndroidThreeTen.init(this)
     }
 
 
